@@ -1,0 +1,82 @@
+package com.atguigu.es;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
+
+
+/**
+ * @author liudm
+ * @create 2021-04-11 16:14
+ */
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+@Document(indexName ="product", shards = 3, replicas = 1)
+public class Product {
+
+    //必须有id,这里的id是全局唯一的标识，等同于es中的"_id"
+    @Id
+    private Long id;//商品唯一标识
+    /**
+     * type : 字段数据类型
+     * analyzer : 分词器类型
+     * index : 是否索引(默认:true)
+     * Keyword : 短语,不进行分词
+     */
+
+    @Field(type = FieldType.Text)
+    private String title;//商品名称
+    @Field(type = FieldType.Keyword)
+    private String category;//分类名称
+    @Field(type = FieldType.Double)
+    private Double price;//商品价格
+    @Field(type = FieldType.Keyword, index = false)
+    private String images;//图片地址
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public String getImages() {
+        return images;
+    }
+
+    public void setImages(String images) {
+        this.images = images;
+    }
+}
